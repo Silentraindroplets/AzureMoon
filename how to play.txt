@@ -1,0 +1,144 @@
+# How to Run "Arena of Echoes"
+
+## What you need
+- Windows 10 or 11 (64-bit)
+- An internet connection (first run only)
+- About 5 minutes
+
+You do NOT need to install Maven. The project includes a wrapper that
+downloads it automatically. You only need Java installed.
+
+---
+
+## STEP 1 — Install Java (JDK 21)
+
+1. Go to: https://adoptium.net/temurin/releases/?version=21
+2. Choose:
+   - Operating System: Windows
+   - Architecture: x64
+   - Package Type: JDK
+   - Version: 21 - LTS
+3. Download the `.msi` installer.
+4. Run the installer. Click Next through all defaults.
+5. Finish.
+
+To verify it installed, open PowerShell and run:
+
+    java -version
+
+You should see something like:
+    openjdk version "21.0.5" 2024-10-15
+
+---
+
+## STEP 2 — Unzip the demo folder
+
+Unzip the `demo` folder anywhere. For example:
+
+    C:\Games\demo
+
+Inside `demo` you should see:
+    pom.xml
+    mvnw
+    mvnw.cmd
+    .mvn\
+    src\
+
+---
+
+## STEP 3 — Open PowerShell in the demo folder
+
+Easiest way: open the `demo` folder in File Explorer, then
+click the address bar, type `powershell`, and press Enter.
+
+Or manually:
+
+    cd C:\Games\demo
+
+---
+
+## STEP 4 — Tell Java where the JDK is
+
+Run this line in PowerShell. Replace the path with YOUR actual JDK
+path if it differs (check inside `C:\Program Files\Eclipse Adoptium\`):
+
+    $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.5.11-hotspot"
+
+To confirm it's set:
+
+    $env:JAVA_HOME
+
+It should print the path back. If it prints nothing, the path is wrong.
+
+NOTE: This only lasts for the current PowerShell window. If you close
+it, you'll need to run this line again next time. See the "Permanent
+setup" section below to make it stick.
+
+---
+
+## STEP 5 — Run the game
+
+    .\mvnw.cmd clean javafx:run
+
+What happens the FIRST time:
+- Maven downloads itself (~10 MB)
+- Maven downloads JavaFX libraries (~30 MB)
+- Your code compiles
+- A game window opens
+
+This takes 2 to 5 minutes depending on your internet.
+Be patient. It may look like it's frozen. It is not.
+
+The SECOND time and after, it starts in a few seconds.
+
+---
+
+## If something goes wrong
+
+### "JAVA_HOME not found in your environment"
+You forgot Step 4, or the path is wrong. Re-run the `$env:JAVA_HOME = ...`
+line and make sure the path exists on disk.
+
+### "mvnw.cmd is not recognized"
+You're not in the demo folder. Run `cd C:\Games\demo` first
+(or wherever you unzipped it).
+
+### Game window doesn't open, no error shown
+Wait 5 minutes. The first run downloads a lot. Check Task Manager
+for a `java.exe` process — if CPU is above 0%, it's working.
+
+### Any other error
+Copy the LAST 20 LINES of the error message and send them back.
+That's usually enough to figure out the problem.
+
+---
+
+## Permanent setup (optional, recommended)
+
+So you don't have to run the `$env:JAVA_HOME` line every time:
+
+1. Press Windows key, type "environment variables"
+2. Click "Edit the system environment variables"
+3. Click "Environment Variables..."
+4. Under "User variables", click "New"
+5. Variable name:  JAVA_HOME
+6. Variable value: C:\Program Files\Eclipse Adoptium\jdk-21.0.5.11-hotspot
+7. Click OK, OK, OK
+8. Close all PowerShell windows
+9. Open a new one
+
+Now every new PowerShell will have JAVA_HOME set. You can skip Step 4
+forever after.
+
+---
+
+## Quick reference (if you already did setup)
+
+    cd C:\Games\demo
+    $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.5.11-hotspot"
+    .\mvnw.cmd clean javafx:run
+
+Or, after permanent setup:
+
+    cd C:\Games\demo
+    .\mvnw.cmd clean javafx:run
